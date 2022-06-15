@@ -1,0 +1,17 @@
+<main>
+    <div class="flex align-items-center justify-content-center flex-wrap">
+        <h2 class="flex align-items-center justify-content-center mr-2">Juego de memoria</h2>
+        <p-button class="flex align-items-center justify-content-center"
+            icon="pi pi-refresh" (onClick)="reloadCards()"></p-button>
+    </div>
+    <p-card >
+        <div class="grid">
+            <div *ngFor="let item of cardItems; let i = index" class="col-3"> 
+                <button class="card-game flex justify-content-center align-items-center" id="{{i}}" (click)="clickDiv(i, item)">
+                    <img class="align-items-center" src="./assets/images/default.png" alt="">
+                </button>
+        </div>
+        </div>
+       
+    </p-card>
+</main>
