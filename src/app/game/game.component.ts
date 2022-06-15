@@ -59,7 +59,7 @@ export class GameComponent implements OnInit {
   }
 
   reloadCards() {
-    for(let i = 0; i < 15; i++) {
+    for(let i = 0; i <= 15; i++) {
       this.showHiddeCards(i, 0, false);
     }
     this.cardItems = this.cardItems.sort(() => { return Math.random() - 0.5});
