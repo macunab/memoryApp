@@ -15,6 +15,10 @@ export class GameComponent implements OnInit {
   secondCard: number = 0;
   firsCardIndex: number = 0;
   secondCardIndex: number = 0;
+  timer: number = 30;
+  hits: number = 0;
+  isPlaying: boolean = false;
+  interval: any;
 
   constructor() { }
 
@@ -23,6 +27,9 @@ export class GameComponent implements OnInit {
   }
 
   clickDiv(index: number, value: number) {
+    if(!this.isPlaying){
+      
+    }
     this.cardNumber++;
     if (this.cardNumber == 1) {
       this.firstCard = value;
@@ -37,6 +44,7 @@ export class GameComponent implements OnInit {
 
       if(this.firstCard == this.secondCard) {
         console.log('LAS CARTAS COINCIDEN');
+        this.hits++;
         this.cardNumber = 0;
       } else {
         setTimeout (() => {
@@ -50,15 +58,18 @@ export class GameComponent implements OnInit {
 
   showHiddeCards(index: number, value: number, show: boolean){
     if(show){
-      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/${value}.png" alt="">`;
+      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/${value}.webp" alt="">`;
       (<HTMLInputElement>document.getElementById('' + index)).disabled = true;
     } else {
-      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/default.png" alt="">`;
+      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/default.webp" alt="">`;
       (<HTMLInputElement>document.getElementById('' + index)).disabled = false;
     } 
   }
 
   reloadCards() {
+    this.hits = 0;
+    this.movements = 0;
+    this.timer = 30;
     for(let i = 0; i <= 15; i++) {
       this.showHiddeCards(i, 0, false);
     }
