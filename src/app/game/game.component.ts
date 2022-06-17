@@ -19,6 +19,8 @@ export class GameComponent implements OnInit {
   hits: number = 0;
   isPlaying: boolean = false;
   interval: any;
+  display: boolean = false;
+  result: string = '';
 
   constructor() { }
 
@@ -28,7 +30,8 @@ export class GameComponent implements OnInit {
 
   clickDiv(index: number, value: number) {
     if(!this.isPlaying){
-      
+      this.timeCounter();
+      this.isPlaying = true;
     }
     this.cardNumber++;
     if (this.cardNumber == 1) {
@@ -46,6 +49,12 @@ export class GameComponent implements OnInit {
         console.log('LAS CARTAS COINCIDEN');
         this.hits++;
         this.cardNumber = 0;
+        if(this.hits == 8) {
+          clearInterval(this.interval);
+          this.isPlaying = false;
+          this.result = 'Felicidades ha ganado el juego';
+          this.display = true;
+        }
       } else {
         setTimeout (() => {
           this.cardNumber = 0;
@@ -67,6 +76,10 @@ export class GameComponent implements OnInit {
   }
 
   reloadCards() {
+    clearInterval(this.interval);
+    this.cardNumber = 0;
+    this.isPlaying = false;
+    this.display = false;
     this.hits = 0;
     this.movements = 0;
     this.timer = 30;
@@ -74,6 +87,18 @@ export class GameComponent implements OnInit {
       this.showHiddeCards(i, 0, false);
     }
     this.cardItems = this.cardItems.sort(() => { return Math.random() - 0.5});
+  }
+
+  timeCounter() {
+    this.interval = setInterval(() => {
+      this.timer--;
+      if(this.timer == 0) {
+        clearInterval(this.interval);
+        this.isPlaying = false;
+        this.result = 'Se ha acabado el tiempo! ha perdido... :(';
+        this.display = true;
+      }
+    }, 1000); 
   }
 
 }

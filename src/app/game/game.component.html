@@ -34,6 +34,14 @@
                 </button>
         </div>
         </div>
-       
     </p-card>
+
+    <p-dialog position="top" [showHeader]="false" [modal]="true" [closable]="false" [(visible)]="display">
+        <h2>
+            {{ result }}
+        </h2>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="reloadCards()" label="Intentar de nuevo?" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
 </main>
