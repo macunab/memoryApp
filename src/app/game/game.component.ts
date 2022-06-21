@@ -21,11 +21,15 @@ export class GameComponent implements OnInit {
   interval: any;
   display: boolean = false;
   result: string = '';
+  imagesUrl: string[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
     this.cardItems = this.cardItems.sort(() => { return Math.random() - 0.5});
+    for(let i=1; i<=8; i++) {
+      this.imagesUrl.push(`./assets/images/${i}.webp`);
+    }
   }
 
   clickDiv(index: number, value: number) {
