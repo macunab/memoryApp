@@ -1,47 +1,52 @@
 <main>
     <div class="flex align-items-center justify-content-center flex-wrap">
         <h2 class="flex align-items-center justify-content-center mr-2">Juego de memoria</h2>
-        <p-button class="flex align-items-center justify-content-center"
-            icon="pi pi-refresh" (onClick)="reloadCards()"></p-button>
+        <p-button class="flex align-items-center justify-content-center" icon="pi pi-refresh" (onClick)="reloadCards()">
+        </p-button>
     </div>
-  
-    <p-card >
-        <div class="flex">
-            <div class="flex-none flex align-items-center justify-content-center" >
-                <div class="field">
-                    <label for="movimientos">Movimientos:</label>
-                    <h2 class="text-center" id="movimientos">{{movements}}</h2>
-                </div>
+
+    <div class="flex align-items-center justify-content-center flex-wrap p-2 md:mx-7">
+        <div class="flex-none flex align-items-center justify-content-center">
+            <div class="field">
+                <label for="movimientos">Movimientos:</label>
+                <h2 class="text-center" id="movimientos">{{movements}}</h2>
             </div>
-     
-            <div class="flex-grow-1 flex align-items-center justify-content-center">
-                <div class="field">
-                    <label for="timer">Tiempo:</label>
-                    <h1 class="text-center" id="timer">{{timer}}</h1>
-                </div>
+        </div>
+
+        <div class="flex-grow-1 flex align-items-center justify-content-center">
+            <div class="field">
+                <label for="timer">Tiempo:</label>
+                <h1 class="text-center" id="timer">{{timer}}</h1>
             </div>
-            <div class="flex-none flex align-items-center justify-content-center">
-                <div class="field">
-                    <label for="hits">Aciertos:</label>
-                    <h2 class="text-center" id="hits">{{hits}}</h2>
+        </div>
+        <div class="flex-none flex align-items-center justify-content-center">
+            <div class="field">
+                <label for="hits">Aciertos:</label>
+                <h2 class="text-center" id="hits">{{hits}}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="board" class="md:mt-5">
+        <div *ngFor="let item of cardItems; let i = index" class="card_area" (click)="selectCard(i, item)">
+            <div class="card" id="tarjeta{{i}}">
+                <div class="face back" id="trasera{{i}}">
+                    <img src="./assets/images/{{item}}.webp" alt="pokemon{{item}}">
+                </div>
+                <div class="face front">
+                    <img src="./assets/images/default.webp" alt="default">
                 </div>
             </div>
         </div>
-        <div class="grid">
-            <div *ngFor="let item of cardItems; let i = index" class="col-3"> 
-                <button class="card-game flex justify-content-center align-items-center" id="{{i}}" (click)="clickDiv(i, item)">
-                    <img class="align-items-center" src="./assets/images/default.webp" alt="">
-                </button>
-        </div>
-        </div>
-    </p-card>
+    </div>
 
     <p-dialog position="top" [showHeader]="false" [modal]="true" [closable]="false" [(visible)]="display">
         <h2>
             {{ result }}
         </h2>
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (click)="reloadCards()" label="Intentar de nuevo?" styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-check" (click)="reloadCards()" label="Intentar de nuevo?" styleClass="p-button-text">
+            </p-button>
         </ng-template>
     </p-dialog>
 </main>

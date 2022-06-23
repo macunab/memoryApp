@@ -21,38 +21,35 @@ export class GameComponent implements OnInit {
   interval: any;
   display: boolean = false;
   result: string = '';
-  imagesUrl: string[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
     this.cardItems = this.cardItems.sort(() => { return Math.random() - 0.5});
-    for(let i=1; i<=8; i++) {
-      this.imagesUrl.push(`./assets/images/${i}.webp`);
-    }
   }
 
-  clickDiv(index: number, value: number) {
+  selectCard(index: number, value: number) {
+    let showCard = new Audio('./assets/sounds/show-card.mp3');
+    showCard.play();
     if(!this.isPlaying){
       this.timeCounter();
       this.isPlaying = true;
     }
+    let card = <HTMLInputElement>document.getElementById('tarjeta' + index);
     this.cardNumber++;
-    if (this.cardNumber == 1) {
+   
+    if(this.cardNumber == 1) {
       this.firstCard = value;
       this.firsCardIndex = index;
-      this.showHiddeCards(index, value, true);
-
-    } else if(this.cardNumber == 2){
-      this.showHiddeCards(index, value, true);
+      this.rotateCard(card);
+    } else if( this.cardNumber == 2 ) {
       this.movements++;
       this.secondCard = value;
       this.secondCardIndex = index;
-
+      this.rotateCard(card);
       if(this.firstCard == this.secondCard) {
-        console.log('LAS CARTAS COINCIDEN');
-        this.hits++;
         this.cardNumber = 0;
+        this.hits++;
         if(this.hits == 8) {
           clearInterval(this.interval);
           this.isPlaying = false;
@@ -60,23 +57,24 @@ export class GameComponent implements OnInit {
           this.display = true;
         }
       } else {
-        setTimeout (() => {
+        setTimeout(() => {
           this.cardNumber = 0;
-          this.showHiddeCards(this.firsCardIndex, this.firstCard, false);
-          this.showHiddeCards(this.secondCardIndex, this.secondCard, false);
+          this.hideCard(this.firsCardIndex);
+          this.hideCard(this.secondCardIndex);
         }, 800);
       }
     }
   }
 
-  showHiddeCards(index: number, value: number, show: boolean){
-    if(show){
-      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/${value}.webp" alt="">`;
-      (<HTMLInputElement>document.getElementById('' + index)).disabled = true;
-    } else {
-      (<HTMLInputElement>document.getElementById('' + index)).innerHTML = `<img class="align-items-center" src="./assets/images/default.webp" alt="">`;
-      (<HTMLInputElement>document.getElementById('' + index)).disabled = false;
-    } 
+  rotateCard(card: HTMLInputElement) {
+    if (card.style.transform != "rotateY(180deg)") {
+      card.style.transform = "rotateY(180deg)"
+    }
+  }
+
+  hideCard(cardIndex: number) {
+    let card = <HTMLInputElement>document.getElementById('tarjeta' + cardIndex);
+    card.style.transform = "rotateY(0deg)";
   }
 
   reloadCards() {
@@ -88,7 +86,7 @@ export class GameComponent implements OnInit {
     this.movements = 0;
     this.timer = 30;
     for(let i = 0; i <= 15; i++) {
-      this.showHiddeCards(i, 0, false);
+      this.hideCard(i);
     }
     this.cardItems = this.cardItems.sort(() => { return Math.random() - 0.5});
   }
