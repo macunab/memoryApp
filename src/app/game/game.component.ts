@@ -30,7 +30,6 @@ export class GameComponent implements OnInit {
 
   selectCard(index: number, value: number) {
     let showCard = new Audio('./assets/sounds/show-card.mp3');
-    showCard.play();
     if(!this.isPlaying){
       this.timeCounter();
       this.isPlaying = true;
@@ -39,15 +38,17 @@ export class GameComponent implements OnInit {
     this.cardNumber++;
    
     if(this.cardNumber == 1) {
+      showCard.play();
       this.firstCard = value;
       this.firsCardIndex = index;
       this.rotateCard(card);
     } else if( this.cardNumber == 2 ) {
+      showCard.play();
       this.movements++;
       this.secondCard = value;
       this.secondCardIndex = index;
       this.rotateCard(card);
-      if(this.firstCard == this.secondCard) {
+      if(this.firstCard == this.secondCard && this.firsCardIndex != this.secondCardIndex) {
         this.cardNumber = 0;
         this.hits++;
         if(this.hits == 8) {
@@ -68,7 +69,8 @@ export class GameComponent implements OnInit {
 
   rotateCard(card: HTMLInputElement) {
     if (card.style.transform != "rotateY(180deg)") {
-      card.style.transform = "rotateY(180deg)"
+      card.style.transform = "rotateY(180deg)";
+      card.style.pointerEvents = "none";
     }
   }
 
